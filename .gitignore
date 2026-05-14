@@ -1,0 +1,14 @@
+# Generated build outputs
+build/
+**/target/
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+**/.gradle/
+**/.m2/
+**/.deps/
+*.o
+*.so
+*.a
+*.dylib
+*.class
