@@ -8,6 +8,11 @@
 > 45.8× SQL speedup verified at production selectivity (1-in-224) on a 1 000 000-document collection.
 > No known correctness defects. Ready for upstream review.
 
+This repository is a fork of the YugabyteDB source tree. The Option C implementation
+lives in [`src/postgres/third-party-extensions/documentdb/pg_documentdb/`](src/postgres/third-party-extensions/documentdb/pg_documentdb/)
+and touches seven files listed in [Appendix A](#appendix-a-file-change-summary).
+No changes were made outside the DocumentDB extension.
+
 ---
 
 ## Table of Contents
@@ -1327,22 +1332,24 @@ Test: `6Bp_existsQueryTest.py`
 
 ## Appendix A: File Change Summary
 
-The following source files in the DocumentDB extension were modified by this implementation:
+All modified source files are in this repository under
+`src/postgres/third-party-extensions/documentdb/pg_documentdb/`.
+The base path below is abbreviated as `pg_documentdb/`.
 
-| File | Changes |
+| File in this repo | Changes |
 |---|---|
-| `create_indexes.c` | `IsOptionCSideTableIndex`, `CreateOptionCSideTableStructureOnly`, `CreateOptionCSideTableIndex`, `OptionCBackfillIndex` |
-| `create_indexes.h` | Forward declarations for non-static functions |
-| `create_indexes_background.c` | Route Option C indexes through `CreateOptionCSideTableStructureOnly` + queue rather than synchronous build |
-| `insert.c` | `OptionCFieldValue`, `OptionCIndexRow`, `OptionCExtractScalar`, `MaintainOptionCIndexEntriesForInsert` |
-| `update.c` | `DeleteOptionCIndexEntriesForDocument`, `MaintainOptionCScalarIndexEntriesForUpdate` |
-| `delete.c` | `MaintainOptionCScalarIndexEntriesForDelete` (delegates to `DeleteOptionCIndexEntriesForDocument`) |
-| `aggregation_commands.c` | `OptionCFilterInfo` struct, `ExtractOptionCFilter`, `LookupOptionCIndex`, `EstimateOptionCSelectivity`, `ExecuteOptionCFindFirstPage`; Step 30 adds `isNullLiteral` and null literal WHERE clause; Step 31 adds `isExistsFalse`, `isExistsTrue`, `$exists` parsing, updated null/missing/exists WHERE conditions |
-| `documents_option_c_planner.c` | Step 28 SPI nesting fix: `OptionCBeginCustomScan` now completes SPI work and calls `SPI_finish()` before returning; `OptionCNext` reads from `state->rows[]` |
+| [`pg_documentdb/include/commands/create_indexes.h`](src/postgres/third-party-extensions/documentdb/pg_documentdb/include/commands/create_indexes.h) | Forward declarations for `IsOptionCSideTableIndex`, `CreateOptionCSideTableStructureOnly`, `CreateOptionCSideTableIndex` |
+| [`pg_documentdb/src/commands/create_indexes.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/commands/create_indexes.c) | `IsOptionCSideTableIndex`, `CreateOptionCSideTableStructureOnly`, `CreateOptionCSideTableIndex`, `OptionCBackfillIndex`, per-index ic_ table creation, LSM index on typed columns, catalog row insertion, backfill SQL |
+| [`pg_documentdb/src/commands/create_indexes_background.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/commands/create_indexes_background.c) | Routes Option C indexes through `CreateOptionCSideTableStructureOnly` + background worker queue rather than synchronous build |
+| [`pg_documentdb/src/commands/insert.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/commands/insert.c) | `OptionCFieldValue`, `OptionCIndexRow`, `OptionCExtractScalar`, `MaintainOptionCIndexEntriesForInsert`; Step 31 adds `isNullValue` and `'\x01'` null sentinel |
+| [`pg_documentdb/src/commands/update.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/commands/update.c) | `DeleteOptionCIndexEntriesForDocument`, `MaintainOptionCScalarIndexEntriesForUpdate` |
+| [`pg_documentdb/src/commands/delete.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/commands/delete.c) | `MaintainOptionCScalarIndexEntriesForDelete` (delegates to `DeleteOptionCIndexEntriesForDocument`) |
+| [`pg_documentdb/src/commands/aggregation_commands.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/commands/aggregation_commands.c) | `OptionCFilterInfo` struct, `ExtractOptionCFilter`, `LookupOptionCIndex`, `EstimateOptionCSelectivity`, `ExecuteOptionCFindFirstPage`; Step 30 adds `isNullLiteral` and null literal WHERE clause; Step 31 adds `isExistsFalse`, `isExistsTrue`, `$exists` parsing |
+| [`pg_documentdb/src/planner/documents_option_c_planner.c`](src/postgres/third-party-extensions/documentdb/pg_documentdb/src/planner/documents_option_c_planner.c) | New file. PostgreSQL custom scan planner path (Tier 1, equality only). Step 28 SPI nesting fix: `OptionCBeginCustomScan` completes SPI work and calls `SPI_finish()` before returning; `OptionCNext` reads from `state->rows[]` |
 
-SQL objects installed on B1:
-- `documentdb_api_catalog.option_c_indexes` table
-- `documentdb_api_internal.option_c_backfill_ic` PL/pgSQL function
+SQL objects (installed directly on the test cluster, not in source files):
+- `documentdb_api_catalog.option_c_indexes` — index metadata catalog table
+- `documentdb_api_internal.option_c_backfill_ic` — PL/pgSQL backfill function
 
 ---
 
