@@ -1,2 +1,0 @@
-{{ $includePath := (print .Page.File.Dir (.Get 0)) | printf "./content/%s" }}
-{{ readFile $includePath | safeHTML }}

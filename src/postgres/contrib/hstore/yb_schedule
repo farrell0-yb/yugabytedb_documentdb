@@ -1,3 +1,0 @@
-# contrib/hstore/yb_schedule
-
-test: yb.port.hstore

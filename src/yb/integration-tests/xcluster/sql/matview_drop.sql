@@ -1,9 +1,0 @@
---
--- MATERIALIZED VIEWS
---
-
- DROP MATERIALIZED VIEW mvtest_tvmm;
- DROP MATERIALIZED VIEW mvtest_tvm_renamed;
- DROP MATERIALIZED VIEW mvtest_tm CASCADE;
- DROP VIEW mvtest_tv;
- DROP TABLE mvtest_t;

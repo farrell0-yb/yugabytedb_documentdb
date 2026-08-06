@@ -1,6 +1,0 @@
-{{ $headingAnchor := urlize .Inner }}
-{{- if .Params.id -}}
-  {{ $headingAnchor = .Params.id }}
-{{- end -}}
-
-<h{{ .Params.Level }} id="{{ $headingAnchor | safeURL }}">{{- .Inner | safeHTML -}}</h{{ .Params.Level }}>

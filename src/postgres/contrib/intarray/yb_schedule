@@ -1,3 +1,0 @@
-# contrib/intarray/yb_schedule
-
-test: yb.port._int

@@ -1,9 +1,0 @@
-# Copyright (c) YugabyteDB, Inc.
-
-container.small:
-  numCores: 2
-  memSizeGB: 3.7
-  instanceTypeDetails:
-    volumeDetailsList:
-      - volumeSizeGB: 16
-        volumeType: SSD

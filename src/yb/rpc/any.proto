@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package yb.rpc;
-
-message Any {
-  string type_url = 1;
-  bytes value = 2;
-}

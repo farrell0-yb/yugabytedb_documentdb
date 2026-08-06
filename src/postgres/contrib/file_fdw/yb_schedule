@@ -1,3 +1,0 @@
-# contrib/file_fdw/yb_schedule
-
-test: yb.port.file_fdw

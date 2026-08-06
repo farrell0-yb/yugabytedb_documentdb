@@ -1,5 +1,0 @@
-description: Job schedules
-content:
-  application/json:
-    schema:
-      $ref: "../schemas/JobSchedulePagedResp.yaml"

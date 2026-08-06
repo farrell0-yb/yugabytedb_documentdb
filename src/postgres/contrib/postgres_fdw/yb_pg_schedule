@@ -1,3 +1,0 @@
-# contrib/postgres_fdw/yb_pg_schedule
-
-test: yb.port.postgres_fdw

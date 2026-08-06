@@ -1,6 +1,0 @@
---
--- NONCONCURRENT BACKFILL TESTS
---
-
-DROP TABLE foo CASCADE;
-DROP TABLE foo_partitioned_by_col CASCADE;

@@ -1,5 +1,0 @@
-required: false
-content:
-  application/json:
-    schema:
-      $ref: "../schemas/UniverseRestart.yaml"

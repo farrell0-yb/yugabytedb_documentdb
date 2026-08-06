@@ -1,5 +1,0 @@
-run-sql:
-  - dbname: boutique
-  - user: paul
-  - parse_query: False
-  - autocommit: False

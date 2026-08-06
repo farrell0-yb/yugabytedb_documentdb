@@ -1,6 +1,0 @@
-.dockerignore
-.gitignore
-docker/
-src/test/
-build/
-.gradle/

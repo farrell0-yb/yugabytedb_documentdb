@@ -1,9 +1,0 @@
-title: JobInstanceState
-description: State of a job instance that is a part of JobInstance.
-type: string
-enum:
-  - FAILED
-  - RUNNING
-  - SUCCESS
-  - SCHEDULED
-  - SKIPPED

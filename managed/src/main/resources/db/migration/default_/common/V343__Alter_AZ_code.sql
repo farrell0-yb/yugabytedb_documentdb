@@ -1,1 +1,0 @@
-ALTER TABLE availability_zone ALTER column code type VARCHAR(100);

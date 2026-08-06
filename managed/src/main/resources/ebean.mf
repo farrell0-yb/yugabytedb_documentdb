@@ -1,2 +1,0 @@
-entity-packages: com.yugabyte.yw.models
-transactional-packages: com.yugabyte.yw

@@ -1,3 +1,0 @@
-# contrib/earthdistance/yb_schedule
-
-test: yb.port.earthdistance

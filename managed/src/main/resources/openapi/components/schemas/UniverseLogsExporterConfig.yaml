@@ -1,7 +1,0 @@
-title: UniverseLogsExporterConfig
-type: object
-description: |
-  UniverseLogsExporterConfig
-  Universe Logs Exporter Config. Part of AuditLogConfig.
-allOf:
-  - $ref: "./UniverseExporterConfig.yaml"

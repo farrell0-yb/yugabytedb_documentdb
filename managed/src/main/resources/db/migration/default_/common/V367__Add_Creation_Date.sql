@@ -1,1 +1,0 @@
-ALTER TABLE groups_mapping_info ADD COLUMN IF NOT EXISTS creation_date TIMESTAMP NOT NULL DEFAULT NOW();

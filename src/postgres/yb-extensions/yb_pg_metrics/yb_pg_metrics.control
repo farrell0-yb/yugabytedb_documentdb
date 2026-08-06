@@ -1,3 +1,0 @@
-# yb_pg_metrics extension
-comment = 'track execution statistics of all YSQL statements executed'
-module_pathname = '$libdir/yb_pg_metrics'

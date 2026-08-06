@@ -1,6 +1,0 @@
-ClusterSpec:
-  description: DB Cluster to be updated
-  content:
-    application/json:
-      schema:
-        $ref: '../schemas/_index.yaml#/ClusterSpec'
